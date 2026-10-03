@@ -44,3 +44,19 @@ jobs:
         run: |
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/product-api:latest
           docker image ls ${{ secrets.DOCKERHUB_USERNAME }}/product-api
+
+  deploy-local:
+    needs: push-image
+    runs-on: [self-hosted, windows]
+    timeout-minutes: 10
+    steps:
+      - name: Pull image moi va khoi dong lai container
+        shell: powershell
+        working-directory: D:\product-api
+        run: |
+          $ErrorActionPreference = 'Continue'
+          docker compose -f docker-compose-prod.yaml pull
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          docker compose -f docker-compose-prod.yaml up -d --wait --wait-timeout 180
+          if ($LASTEXITCODE -ne 0) { docker compose -f docker-compose-prod.yaml logs; exit 1 }
+          docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"
