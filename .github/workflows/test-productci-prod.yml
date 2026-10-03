@@ -27,9 +27,6 @@ jobs:
       - name: Run unit tests
         run: npm test
 
-      - name: Create .env from example
-        run: cp .env.example .env
-
       - name: Start MongoDB and API with Docker Compose
         run: docker compose up -d --build --wait --wait-timeout 120
 
