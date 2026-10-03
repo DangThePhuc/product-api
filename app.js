@@ -12,7 +12,9 @@ app.get('/health', (req, res) => {
   }
   res.status(503).json({ status: 'error', db: 'disconnected' });
 });
-
+   app.get('/', (req, res) => {
+     res.json({ message: 'Product API - CI/CD OK' });
+   });
 app.use('/api/products', productRoutes);
 
 module.exports = app;
