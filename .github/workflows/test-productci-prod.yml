@@ -1,0 +1,58 @@
+name: Test Product CI Prod
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ci-prod:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Create .env from example
+        run: cp .env.example .env
+
+      - name: Start MongoDB and API with Docker Compose
+        run: docker compose up -d --build --wait --wait-timeout 120
+
+      - name: Show container status
+        run: docker compose ps
+
+      - name: Verify healthchecks
+        run: |
+          for c in nammongodb product-api; do
+            status=$(docker inspect --format '{{.State.Health.Status}}' "$c")
+            echo "$c: $status"
+            [ "$status" = "healthy" ]
+          done
+
+      - name: Run CRUD integration test
+        env:
+          BASE_URL: http://localhost:3001
+        run: bash scripts/crud-test.sh
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs
+
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
