@@ -1,14 +1,11 @@
 {
-  "main": "server.js",
-"scripts": {
-  "start": "node server.js"
-},
   "name": "product-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "RESTful API CRUD cho Product dùng Express và Mongoose",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
