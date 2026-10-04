@@ -3,7 +3,6 @@ node_modules/
 
 # File chứa biến môi trường
 .env
-.env.example
 
 # File log của npm
 npm-debug.log
