@@ -8,18 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  simple:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: docker build -t product-api:ci .
-
   ci-prod:
     runs-on: ubuntu-latest
     timeout-minutes: 10
