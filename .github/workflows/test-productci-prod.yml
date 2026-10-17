@@ -43,7 +43,7 @@ jobs:
       - name: Run CRUD integration test
         env:
           BASE_URL: http://localhost:3001
-        run: bash scripts/crud-test.sh
+        run: npm test
       - name: Show logs on failure
         if: failure()
         run: docker compose logs
