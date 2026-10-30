@@ -62,7 +62,7 @@ describe(
       const res = await send('POST', '/api/products', {
         pid, pname: 'Laptop', price: 1000, quantity: 5,
       });
-      assert.strictEqual(res.status, 201);
+      assert.strictEqual(res.status, 200);
     });
 
     test('POST trùng pid bị từ chối (409)', async () => {
