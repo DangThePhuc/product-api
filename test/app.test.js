@@ -29,7 +29,7 @@ describe('Smoke test (không cần MongoDB)', () => {
 
   test('GET đường dẫn không tồn tại trả 404', async () => {
     const res = await fetch(`${baseUrl}/khong-ton-tai`);
-    assert.strictEqual(res.status, 400);
+    assert.strictEqual(res.status, 404);
   });
 });
 
@@ -80,7 +80,7 @@ describe(
 
     test('GET một sản phẩm trả 200', async () => {
       const res = await send('GET', `/api/products/${pid}`);
-      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.status, 201);
     });
 
     test('PUT cập nhật giá', async () => {

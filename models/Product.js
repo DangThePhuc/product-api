@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema(
     pid: { type: String, required: true, unique: true, trim: true },
     pname: { type: String, required: true, trim: true },
     price: { type: Number, required: false, min: 0 },
-    quantity: { type: Number, required: false, min: 1, default: 0 },
+    quantity: { type: Number, required: false, min: 1, default: 1 },
   }
 );
 
